@@ -19,8 +19,8 @@ public class NumeroSeries {
     }
 
     public void AgregarNroSeries(int idProducto, String nroserie) {
-        ma.bd.abrir();
+        
         ma.bd.ingreso("insert into numeroseries (idproducto, numeroserie) values(" + idProducto + ", '" + nroserie + "')");
-        ma.bd.cerrarBase();
+        
     }
 }

@@ -14,18 +14,18 @@ public class ClienteDAO {
 
     //Metodo utilizado en el frm adicional !!
     public MiModelo GetClientesByNombreRazonSocial(String nombreRazonSocial) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select nombrerazonsocial as 'Nombre/Razon Social' from cliente where nombreRazonSocial like ('" + nombreRazonSocial + "%')");
-        ma.bd.cerrarBase();
+        
 
         return ma.bd.getModelo();
     }
 
     //Obtener valores del cliente por razon social - Frm Adicional
     public String[] GetValuesClientesByNombreRazonSocial(String nombreRazonsocial) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select dniruc, direccion, nombrerazonsocial from cliente where nombrerazonsocial = '" + nombreRazonsocial + "'");
-        ma.bd.cerrarBase();
+        
 
         String[] camposCliente = new String[3];
 
@@ -44,20 +44,20 @@ public class ClienteDAO {
 
     //Metodo utilizado para la busqueda del cliente, por dni-Ruc o nombre - Razon Social
     public MiModelo GetClientesByDniNombreRS(String dniRucNombreRS) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select idcliente, nombrerazonsocial as 'Nombre/Razon Social',dniruc as 'DNI/Ruc'"
                 + ",Direccion,Telefono from cliente where"
                 + " (nombreRazonSocial like '" + dniRucNombreRS + "%' or dniruc like '" + dniRucNombreRS + "%') "
                 + "and estado = 0 ");
-        ma.bd.cerrarBase();
+        
         return ma.bd.getModelo();
     }
 
     //Obtener Cliente por DNI - Venta, Servicio
     public Cliente GetClientesByDniRuc(String dniRuc) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select dniruc, direccion, nombrerazonsocial,idcliente from cliente where dniRuc = '" + dniRuc + "'");
-        ma.bd.cerrarBase();
+        
 
         Cliente newCliente = new Cliente();
 
@@ -77,9 +77,9 @@ public class ClienteDAO {
 
     //Obtener Valores del cliente por dni o Ruc, Venta y Servicio
     public String[] GetValuesClienteByDniRuc(String dniRuc) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select nombreRazonSocial, direccion from cliente where dniRuc = '" + dniRuc + "'");
-        ma.bd.cerrarBase();
+        
 
         String[] camposCliente = new String[2];
 
@@ -95,9 +95,9 @@ public class ClienteDAO {
 
     public boolean clienteExistente(String dniRuc) {
         boolean esNuevo;
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select idcliente from cliente where dniRuc = '" + dniRuc + "'");
-        ma.bd.cerrarBase();
+        
 
         if (ma.bd.getNumeroFilas() > 0) {
             esNuevo = false;
@@ -111,31 +111,31 @@ public class ClienteDAO {
     //Agregar Nuevo Cliente
     public void agregarCliente(Cliente cliente) {
 
-        ma.bd.abrir();
+        
         ma.bd.ingreso("insert into cliente(nombreRazonSocial, dniRuc, direccion,telefono) "
                 + " values('" + cliente.getNombreRazonSocial() + "', '" + cliente.getDniRuc() + "', '" + cliente.getDireccion() + "', '" + cliente.getTelefono() + "')");
-        ma.bd.cerrarBase();
+        
     }
 
     //Actualizar Cliente
     public void modificarCliente(Cliente cliente) {
-        ma.bd.abrir();
+        
         ma.bd.ingreso("update cliente set nombreRazonSocial = '" + cliente.getNombreRazonSocial() + "', dniRuc = '" + cliente.getDniRuc() + "', direccion = '" + cliente.getDireccion() + "',telefono = '" + cliente.getTelefono() + "' "
                 + "where idcliente = " + cliente.getIdCliente() + " ");
-        ma.bd.cerrarBase();
+        
     }
 
     //Eliminar Cliente
     public void eliminarCliente(int idCliente) {
-        ma.bd.abrir();
+        
         ma.bd.ingreso("delete from cliente where idcliente = " + idCliente + " ");
-        ma.bd.cerrarBase();
+        
     }
 
     //Desactivar Cliente
     public void desactivarCliente(int idCliente) {
-        ma.bd.abrir();
+        
         ma.bd.ingreso("update cliente set estado = 1 where idcliente = " + idCliente + " ");
-        ma.bd.cerrarBase();
+        
     }
 }

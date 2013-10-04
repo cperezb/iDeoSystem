@@ -30,9 +30,9 @@ public class Productos {
 
         String producto[] = new String[2];
 
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select descripcion,precioVenta from producto where codigo = '" + codigo + "' ");
-        ma.bd.cerrarBase();
+        
 
         if (ma.bd.getNumeroFilas() > 0) {
             for (int i = 0; i < producto.length; i++) {
@@ -44,16 +44,16 @@ public class Productos {
     }
 
 //    public MiModelo GetProductosByDescripcion(String descripcion) {
-//        ma.bd.abrir();
+//        
 //        ma.bd.sentencia("select descripcion as 'Descripcion' from producto where descripcion like ('" + descripcion + "%')");
-//        ma.bd.cerrarBase();
+//        
 //
 //        return ma.bd.getModelo();
 //    }
     public String[] GetValuesProductosByDescripcion(String descripcion) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select codigo, descripcion, precioVenta from producto where descripcion = '" + descripcion + "'");
-        ma.bd.cerrarBase();
+        
 
         String[] camposProducto = new String[3];
 
@@ -67,9 +67,9 @@ public class Productos {
     }
 
     public String[] GetProductoByCodigo(String codigo) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select codigo, descripcion, precioVenta from producto where codigo = '" + codigo + "'");
-        ma.bd.cerrarBase();
+        
 
         String[] camposProducto = new String[3];
 
@@ -84,9 +84,9 @@ public class Productos {
 
     public String[] GetNumeroSerieFromProductoByDescripcion(String descripcion) {
 
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select ns.numeroserie from numeroseries as ns inner join producto as p on p.idproducto = ns.idproducto where p.descripcion = '" + descripcion + "'");
-        ma.bd.cerrarBase();
+        
 
 
         String[] numeroSeries = new String[ma.bd.getNumeroFilas()];
@@ -102,9 +102,9 @@ public class Productos {
 //    public String[] GetValuesProductoByCodigo(String codigo) {
 //        String producto[] = new String[4];
 //
-//        ma.bd.abrir();
+//        
 //        ma.bd.sentencia("select descripcion, marca, preciocompra, precioventa from producto where codigo = '" + codigo + "' ");
-//        ma.bd.cerrarBase();
+//        
 //
 //        if (ma.bd.getNumeroFilas() > 0) {
 //            for (int i = 0; i < producto.length; i++) {
@@ -116,31 +116,31 @@ public class Productos {
 //    }
     public void agregarProducto(String codigo, String descripcion, String marca, String Categoria, int cantidad, float precioVenta, float precioCompra) {
         int idCategoria = ma.categoria.GetIDCategoria(Categoria);
-        ma.bd.abrir();
+        
         ma.bd.ingreso("insert into producto(codigo, descripcion, idcategoria, marca, stock, precioventa, preciocompra) "
                 + " values('" + codigo + "', '" + descripcion + "', " + idCategoria + ", '" + marca + "', " + cantidad + ", " + precioVenta + ", " + precioCompra + ")");
-        ma.bd.cerrarBase();
+        
     }
 
     public void actualizarProducto(String codigo, int cantidad, float precioVenta, float precioCompra) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("update producto set stock = (stock + " + cantidad + "), preciocompra = " + precioCompra + ", precioventa = " + precioVenta + " where codigo = '" + codigo + "' ");
-        ma.bd.cerrarBase();
+        
     }
 
     public int ObtenerUltimoIdProducto() {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select idproducto from producto order by idproducto desc limit 1");
-        ma.bd.cerrarBase();
+        
         int idProducto = Integer.parseInt(ma.bd.getTabla().getValueAt(0, 0).toString());
 
         return idProducto;
     }
 
     public int ObtenerUltimoIdProductoByCodigo(String codigo) { // para registrar el idproducto con numero de serie si es que tuviese
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select idproducto from producto where codigo = '" + codigo + "'");
-        ma.bd.cerrarBase();
+        
         int idProducto = Integer.parseInt(ma.bd.getTabla().getValueAt(0, 0).toString());
 
         return idProducto;
@@ -149,9 +149,9 @@ public class Productos {
     public String[] GetValuesProductoFromServicioByCodigo(String codigo) {
         String producto[] = new String[2];
 
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select descripcion, precioventa from producto where codigo = '" + codigo + "' and idcategoria = 5 ");
-        ma.bd.cerrarBase();
+        
 
         if (ma.bd.getNumeroFilas() > 0) {
             for (int i = 0; i < producto.length; i++) {
@@ -165,17 +165,17 @@ public class Productos {
     }
 
     public MiModelo GetProductoByDescripcion(String descripcion) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select descripcion from producto where descripcion like '" + descripcion + "%' or codigo like '" + descripcion + "%'  ");
-        ma.bd.cerrarBase();
+        
 
         return ma.bd.getModelo();
     }
 
     public MiModelo GetProductosRepuestosByDescripcion(String descripcion) {
-        ma.bd.abrir();
+        
         ma.bd.sentencia("select descripcion from producto where (descripcion like '" + descripcion + "%' or codigo like '" + descripcion + "%') and idcategoria = 5 ");
-        ma.bd.cerrarBase();
+        
 
         return ma.bd.getModelo();
     }
